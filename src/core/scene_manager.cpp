@@ -1,7 +1,13 @@
-#include "scenes/main_menu_scene.hpp"
-#include "scenes/play_scene.hpp"
-#include <core/scene_manager.hpp>
 #include <iostream>
+
+
+#include <core/scene_manager.hpp>
+#include <scenes/main_menu_scene.hpp>
+#include <scenes/play_scene.hpp>
+
+// Forward declaration
+struct MainMenuScene;
+struct PlayScene;
 
 SceneManager::SceneManager(){}
 SceneManager::~SceneManager(){}

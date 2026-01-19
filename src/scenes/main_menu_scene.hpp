@@ -2,7 +2,6 @@
 
 #include <scenes/scene.hpp>
 
-
 struct MainMenuScene : Scene{
     MainMenuScene();
     ~MainMenuScene();

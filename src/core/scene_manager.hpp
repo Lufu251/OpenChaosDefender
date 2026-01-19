@@ -3,7 +3,6 @@
 #include <map>
 #include <memory>
 #include <scenes/scene.hpp>
-#include <scenes/main_menu_scene.hpp>
 
 enum class SceneType {
     NONE,

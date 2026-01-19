@@ -3,6 +3,7 @@
 #include <cmath>
 
 #include <core/game.hpp>
+#include <core/global.hpp>
 #include <core/scene_manager.hpp>
 
 
@@ -13,6 +14,7 @@ Game::~Game(){}
 bool Game::Initialize(){
     bool initialized = true;
 
+    // Initialize Raylib window
     InitializeWindow();
 
     // Create canvas and source inverted rectangle for drawing
@@ -20,8 +22,8 @@ bool Game::Initialize(){
     sourceCanvasRectangle = { 0.0f, 0.0f, static_cast<float>(width), -static_cast<float>(height)};
 
     // Scene setup
-    sceneManager.CreateScenes();
-    sceneManager.SetScene(SceneType::MAINMENU);
+    g_SceneManager.CreateScenes();
+    g_SceneManager.SetScene(SceneType::MAINMENU);
 
     return initialized;
 }
@@ -36,18 +38,18 @@ void Game::Run(){
         // inputManager.Update();
 
         // Update ----------
-        sceneManager.currentScene->Update(dt);
+        g_SceneManager.currentScene->Update(dt);
 
         // Draw ----------
-        sceneManager.currentScene->Draw(canvas);
+        g_SceneManager.currentScene->Draw(canvas);
 
-        // Render canvas
+        // Render canvas on the screen
         DrawCanvasToWindow();
     }
 }
 
 void Game::Shutdown(){
-    sceneManager.CloseScenes();
+    g_SceneManager.CloseScenes();
     CloseWindow(); // Close window and OpenGL context
 }
 

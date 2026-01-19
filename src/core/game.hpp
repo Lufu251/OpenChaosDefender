@@ -2,12 +2,8 @@
 
 #include <raylib.h>
 #include <core/scene_manager.hpp>
-#include <string>
 
 struct Game {
-    // Core
-    SceneManager sceneManager;
-
     // Logic
     bool running = true;
 
