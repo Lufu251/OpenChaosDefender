@@ -27,10 +27,13 @@ void Game::Run(){
         if (WindowShouldClose()) running = false;
         float dt = GetFrameTime();
 
+        // Update window
+        windowManager.UpdateGameWindow();
+
         // Input ----------
+        g_InputManager.CalculateGameMousePosition(windowManager);
 
         // Update ----------
-        windowManager.UpdateGameWindow();
         g_SceneManager.currentScene->Update(dt);
 
         // Draw ----------

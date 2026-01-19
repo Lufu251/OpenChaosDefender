@@ -30,7 +30,7 @@ void WindowManager::UpdateGameWindow(){
     Vector2 window = {static_cast<float>(GetScreenWidth()), static_cast<float>(GetScreenHeight())};
 
     // Smaler value from ratio between window and gameWindow for calculating the target rectangle that is drawn to the window
-    float targetGameWindowScale = std::fminf(static_cast<float>(GetScreenWidth()) / gameWindowWidth, static_cast<float>(GetScreenHeight()) / gameWindowHeight);
+    targetGameWindowScale = std::fminf(static_cast<float>(GetScreenWidth()) / gameWindowWidth, static_cast<float>(GetScreenHeight()) / gameWindowHeight);
     
     targetGameWindowRec = {
         (window.x - (static_cast<float>(gameWindowWidth) * targetGameWindowScale)) * 0.5f,
