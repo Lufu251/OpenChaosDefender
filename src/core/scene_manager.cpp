@@ -1,7 +1,6 @@
-#include <iostream>
-
-
 #include <core/scene_manager.hpp>
+
+#include <iostream>
 #include <scenes/main_menu_scene.hpp>
 #include <scenes/play_scene.hpp>
 

@@ -8,6 +8,6 @@ struct PlayScene : Scene{
 
     void Enter() override;
     void Update(float& dt) override;
-    void Draw(RenderTexture& canvas) override;
+    void Draw(RenderTexture2D& gameWindow) override;
     void Exit() override;
 };

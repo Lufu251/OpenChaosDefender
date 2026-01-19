@@ -1,25 +1,24 @@
-#include <raylib.h>
-
 #include <core/input_manager.hpp>
+
+#include <raylib.h>
+#include <raymath.h>
 
 InputManager::InputManager(){}
 InputManager::~InputManager(){}
+
+void InputManager::CalculateMousePosition(){
+    // Calculate mouseposition inside game window
+    Vector2 mouse = GetMousePosition();
+}
 
 void InputManager::Bind(Action action, KeyboardKey key){
     bindings[action] = key;
 }
 
-Vector2 GetGameMousePosition(){
-    Vector2 gameMousePosition; // = GetMouthePosition();
-    
-    // Subtract notch from gameMousePosition
-    // Multiply with scale
-    // clamp to canvas
-
+Vector2 InputManager::GetGameMousePosition(){
     return gameMousePosition;
 }
 
-bool IsActionTriggered(){
-
-    return true;
+bool InputManager::IsActionTriggered(Action action){
+    return IsKeyDown(bindings[action]);
 }

@@ -16,8 +16,8 @@ void PlayScene::Update(float& dt){
     }
 }
 
-void PlayScene::Draw(RenderTexture& canvas){
-    BeginTextureMode(canvas);
+void PlayScene::Draw(RenderTexture2D& gameWindow){
+    BeginTextureMode(gameWindow);
         ClearBackground(RED);
         DrawText("This is the PlayScene", 0, 100, 12, LIGHTGRAY);
     EndTextureMode();

@@ -18,10 +18,11 @@ void MainMenuScene::Update(float& dt){
     }
 }
 
-void MainMenuScene::Draw(RenderTexture& canvas){
-    BeginTextureMode(canvas);
+void MainMenuScene::Draw(RenderTexture2D& gameWindow){
+    BeginTextureMode(gameWindow);
         ClearBackground(BLUE);
         DrawText("This is the MainMenuScene", 0, 100, 12, LIGHTGRAY);
+        DrawCircleV(g_InputManager.GetGameMousePosition(), 10, RED);
     EndTextureMode();
 }
 

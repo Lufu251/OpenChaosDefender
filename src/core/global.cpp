@@ -5,4 +5,4 @@
 
 // Define global instances
 SceneManager g_SceneManager;
-InputManager g_Inputmanager;
+InputManager g_InputManager;
