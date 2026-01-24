@@ -1,14 +1,26 @@
 #pragma once
 
 #include <raylib.h>
-#include <core/window_manager.hpp>
 #include <core/scene_manager.hpp>
+#include <core/input_manager.hpp>
 
 struct Game {
     // Logic
     bool running = true;
 
-    WindowManager windowManager;
+    // Game Window
+    const int screenWidth = 384;
+    const int screenHeight = 384;
+    RenderTexture screen;
+
+    float gameScreenRenderScale;
+    Vector2 gameScreenOffset;
+
+    // Managers
+    InputManager inputManager;
+    AssetManager assetManager;
+    SceneManager sceneManager;
+
 
     Game();
     ~Game();
@@ -17,6 +29,5 @@ struct Game {
     void Run();
     void Shutdown();
 
-    void InitializeWindow();
-    void DrawCanvasToWindow();
+    void DrawGameScreen();
 };

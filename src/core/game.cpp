@@ -1,8 +1,7 @@
-
 #include <raylib.h>
 
+#include <cmath>
 #include <core/game.hpp>
-#include <core/global.hpp>
 
 Game::Game(){}
 
@@ -11,13 +10,12 @@ Game::~Game(){}
 bool Game::Initialize(){
     bool initialized = true;
 
-    // Initialize RenderManager
-    windowManager.CreateRaylibWindow(); // Create Raylib window
-    windowManager.CreateGameWindow(); // Create Game window
+    // Initialize screen texture
+    screen = LoadRenderTexture(screenWidth, screenHeight);
 
     // Scene setup
-    g_SceneManager.CreateScenes();
-    g_SceneManager.SetScene(SceneType::MAINMENU);
+    sceneManager.Initialize(inputManager, assetManager);
+    sceneManager.SetScene(SceneType::MAINMENU);
 
     return initialized;
 }
@@ -27,24 +25,48 @@ void Game::Run(){
         if (WindowShouldClose()) running = false;
         float dt = GetFrameTime();
 
-        // Update window
-        windowManager.UpdateGameWindow();
-
         // Input ----------
-        g_InputManager.CalculateGameMousePosition(windowManager);
+        inputManager.CalculateGameMousePosition();
 
         // Update ----------
-        g_SceneManager.currentScene->Update(dt);
+        sceneManager.SceneTransitionLogic();
+        sceneManager.currentScene->Update(dt);
 
         // Draw ----------
-        g_SceneManager.currentScene->Draw(windowManager.gameWindow);
+        sceneManager.currentScene->Draw(screen);
 
-        // Render gameCanvas on the screen
-        windowManager.RenderGameWindow();
+        // Update and draw game screen to window
+        DrawGameScreen();
     }
 }
 
 void Game::Shutdown(){
-    g_SceneManager.CloseScenes();
+    inputManager.Cleanup();
+    sceneManager.Cleanup();
+
+    CloseAudioDevice();
     CloseWindow(); // Close window and OpenGL context
+}
+
+void Game::DrawGameScreen(){
+    // Calculate game screen render size and offset for drawing to the window
+    gameScreenRenderScale = std::fminf(static_cast<float>(GetScreenWidth()) / screenWidth, static_cast<float>(GetScreenHeight()) / screenHeight);
+    gameScreenOffset = {
+        (GetScreenWidth() - static_cast<float>(screenWidth) * gameScreenRenderScale) * 0.5f,
+        (GetScreenHeight() - static_cast<float>(screenHeight) * gameScreenRenderScale) * 0.5f
+    };
+
+    Rectangle targetGameWindowRec = {
+        gameScreenOffset.x,
+        gameScreenOffset.y,
+        static_cast<float>(screenWidth) * gameScreenRenderScale,
+        static_cast<float>(screenHeight) * gameScreenRenderScale
+    };
+
+    // Render game screen to window
+    Rectangle sourceGameWindowRec = { 0.0f, 0.0f, static_cast<float>(screenWidth), -static_cast<float>(screenHeight)};
+    BeginDrawing();
+            ClearBackground(BLACK);
+            DrawTexturePro(screen.texture, sourceGameWindowRec, targetGameWindowRec, {0, 0}, 0, WHITE);
+    EndDrawing();
 }

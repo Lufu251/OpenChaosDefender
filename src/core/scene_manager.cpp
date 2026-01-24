@@ -11,10 +11,10 @@ struct PlayScene;
 SceneManager::SceneManager(){}
 SceneManager::~SceneManager(){}
 
-void SceneManager::CreateScenes(){
+void SceneManager::Initialize(InputManager& input, AssetManager& assets){
     // Pre-create scenes
-    scenes[SceneType::MAINMENU] = std::make_unique<MainMenuScene>();
-    scenes[SceneType::PLAY] = std::make_unique<PlayScene>();
+    scenes[SceneType::MAINMENU] = std::make_unique<MainMenuScene>(input, assets);
+    scenes[SceneType::PLAY] = std::make_unique<PlayScene>(input, assets);
 }
 
 void SceneManager::SetScene(SceneType newSceneType){
@@ -37,7 +37,26 @@ void SceneManager::SetScene(SceneType newSceneType){
     }
 }
 
-void SceneManager::CloseScenes(){
+void SceneManager::Cleanup(){
     for(auto& scene : scenes)
         scene.second->Exit();
+}
+
+void SceneManager::SceneTransitionLogic(){
+    switch (currentSceneType) {
+        case SceneType::NONE: {
+            
+        }break;
+
+        case SceneType::MAINMENU: {
+            MainMenuScene* scene = static_cast<MainMenuScene*>(currentScene);
+            if(scene->startPlay) SetScene(SceneType::PLAY);
+        }break;
+
+        case SceneType::PLAY: {
+            PlayScene* scene = static_cast<PlayScene*>(currentScene);
+            if(scene->toMainMenu) SetScene(SceneType::MAINMENU);
+        }break;
+    }
+
 }

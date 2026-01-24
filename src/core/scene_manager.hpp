@@ -19,9 +19,9 @@ struct SceneManager{
     SceneManager();
     ~SceneManager();
 
-    void CreateScenes();
+    void Initialize(InputManager& input, AssetManager& assets);
     void SetScene(SceneType newSceneType);
-    void CloseScenes();
+    void Cleanup();
 
-
+    void SceneTransitionLogic();
 };

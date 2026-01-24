@@ -3,11 +3,13 @@
 #include <scenes/scene.hpp>
 
 struct PlayScene : Scene{
-    PlayScene();
+    bool toMainMenu = false;
+
+    PlayScene(InputManager& input, AssetManager& assets);
     ~PlayScene();
 
     void Enter() override;
     void Update(float& dt) override;
-    void Draw(RenderTexture2D& gameWindow) override;
+    void Draw(RenderTexture2D& screen) override;
     void Exit() override;
 };

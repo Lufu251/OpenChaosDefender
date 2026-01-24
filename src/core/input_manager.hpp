@@ -3,8 +3,6 @@
 #include <raylib.h>
 #include <map>
 
-#include <core/window_manager.hpp>
-
 enum class Action { 
     Jump, 
     Shoot, 
@@ -19,9 +17,12 @@ struct InputManager{
     InputManager();
     ~InputManager();
 
-    void CalculateGameMousePosition(WindowManager& windowManager);
-    
+    void CalculateGameMousePosition();
     void Bind(Action action, KeyboardKey key);
+
     Vector2 GetGameMousePosition();
+    bool IsActionContinuos(Action action);
     bool IsActionTriggered(Action action);
+
+    void Cleanup();
 };

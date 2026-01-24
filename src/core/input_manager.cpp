@@ -6,18 +6,18 @@
 InputManager::InputManager(){}
 InputManager::~InputManager(){}
 
-void InputManager::CalculateGameMousePosition(WindowManager& windowManager){
-    // Calculate mouseposition inside game window
-    Vector2 mouse = GetMousePosition();
+void InputManager::CalculateGameMousePosition(){
+    // // Calculate mouseposition inside game window
+    // Vector2 mouse = GetMousePosition();
 
-    gameMousePosition.x = static_cast<int>((mouse.x - windowManager.targetGameWindowRec.x) / windowManager.targetGameWindowScale);
-    gameMousePosition.y = static_cast<int>((mouse.y - windowManager.targetGameWindowRec.y) / windowManager.targetGameWindowScale);
+    // gameMousePosition.x = static_cast<int>((mouse.x - windowManager.targetGameWindowRec.x) / windowManager.targetGameWindowScale);
+    // gameMousePosition.y = static_cast<int>((mouse.y - windowManager.targetGameWindowRec.y) / windowManager.targetGameWindowScale);
 
-    gameMousePosition = Vector2Clamp(
-        gameMousePosition, 
-        {0, 0}, 
-        {static_cast<float>(windowManager.gameWindowWidth), static_cast<float>(windowManager.gameWindowHeight)}
-    );
+    // gameMousePosition = Vector2Clamp(
+    //     gameMousePosition, 
+    //     {0, 0}, 
+    //     {static_cast<float>(windowManager.gameWindowWidth), static_cast<float>(windowManager.gameWindowHeight)}
+    // );
 }
 
 void InputManager::Bind(Action action, KeyboardKey key){
@@ -28,6 +28,14 @@ Vector2 InputManager::GetGameMousePosition(){
     return gameMousePosition;
 }
 
-bool InputManager::IsActionTriggered(Action action){
+bool InputManager::IsActionContinuos(Action action){
     return IsKeyDown(bindings[action]);
+}
+
+bool InputManager::IsActionTriggered(Action action){
+    return IsKeyPressed(bindings[action]);
+}
+
+void InputManager::Cleanup(){
+    bindings.clear();
 }
