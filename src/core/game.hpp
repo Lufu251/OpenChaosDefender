@@ -23,7 +23,6 @@ struct Game {
     int screenHeighScaled;
     float screenRenderScale;
     Vector2 screenOffset;
-    
 
     // Managers
     InputManager inputManager;
@@ -42,5 +41,6 @@ struct Game {
     void UpdateScreen();
     void DrawScreen();
 
+    // Helpers
     Vector2 MapWindowToScreenPosition(const Vector2& original);
 };

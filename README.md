@@ -45,4 +45,4 @@ This is a work in progress TowerDefense game that will focus on freedom of tower
 * (Add a screenshot or GIF of your project here)
 
 ## License
-This project is licensed under the [LICENSE_NAME] License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

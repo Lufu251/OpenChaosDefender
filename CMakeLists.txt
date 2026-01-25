@@ -1,7 +1,7 @@
 # Minimum required version of CMake
 cmake_minimum_required(VERSION 3.22)
 # Project name and version
-project(MyCppProject VERSION 1.0)
+project(OpenChaosDefender VERSION 1.0)
 
 # Set the C++ standard
 set(CMAKE_CXX_STANDARD 20)
