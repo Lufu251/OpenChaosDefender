@@ -1,7 +1,8 @@
-#include <raylib.h>
+#include <core/game.hpp>
 
 #include <cmath>
-#include <core/game.hpp>
+#include <raylib.h>
+#include <raymath.h>
 
 Game::Game(){}
 
@@ -9,6 +10,8 @@ Game::~Game(){}
 
 bool Game::Initialize(){
     bool initialized = true;
+
+    InitializeWindow();
 
     // Initialize screen texture
     screen = LoadRenderTexture(screenWidth, screenHeight);
@@ -24,9 +27,10 @@ void Game::Run(){
     while (running){
         if (WindowShouldClose()) running = false;
         float dt = GetFrameTime();
+        UpdateScreen();
 
         // Input ----------
-        inputManager.CalculateGameMousePosition();
+        inputManager.SetMouse(MapWindowToScreenPosition(GetMousePosition()));
 
         // Update ----------
         sceneManager.SceneTransitionLogic();
@@ -35,8 +39,8 @@ void Game::Run(){
         // Draw ----------
         sceneManager.currentScene->Draw(screen);
 
-        // Update and draw game screen to window
-        DrawGameScreen();
+        // Draw screen to window
+        DrawScreen();
     }
 }
 
@@ -48,25 +52,73 @@ void Game::Shutdown(){
     CloseWindow(); // Close window and OpenGL context
 }
 
-void Game::DrawGameScreen(){
-    // Calculate game screen render size and offset for drawing to the window
-    gameScreenRenderScale = std::fminf(static_cast<float>(GetScreenWidth()) / screenWidth, static_cast<float>(GetScreenHeight()) / screenHeight);
-    gameScreenOffset = {
-        (GetScreenWidth() - static_cast<float>(screenWidth) * gameScreenRenderScale) * 0.5f,
-        (GetScreenHeight() - static_cast<float>(screenHeight) * gameScreenRenderScale) * 0.5f
-    };
+// Initialize Raylib window
+void Game::InitializeWindow(){
+    // Pre window initialize
+    SetConfigFlags(FLAG_WINDOW_HIGHDPI); // Enable High DPI scaling
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE); // Set window is resizable
 
+    // Window initialize
+    InitWindow(windowWidth, windowHeight, titel);
+
+    // Audiodevice initialize
+    InitAudioDevice();
+
+    // Post window initialize
+    SetWindowMinSize(minWindowWidth,minWindowHeight); // Set minimum window size
+    SetTargetFPS(60); // Set 60 frames-per-second
+    SetExitKey(KEY_NULL);
+}
+
+// Update screen variables to draw later
+void Game::UpdateScreen(){
+    // Calculate offset and scale to draw the screen to the window
+    screenRenderScale = std::fminf(static_cast<float>(GetScreenWidth()) / screenWidth, static_cast<float>(GetScreenHeight()) / screenHeight);
+    screenWidthScaled = static_cast<float>(screenWidth) * screenRenderScale;
+    screenHeighScaled = static_cast<float>(screenHeight) * screenRenderScale;
+
+    screenOffset = {
+        (GetScreenWidth() - screenWidthScaled) * 0.5f,
+        (GetScreenHeight() - screenHeighScaled) * 0.5f
+    };
+}
+
+// Draw the scaled screen to the window
+void Game::DrawScreen(){
+    // Calculate render transforms
     Rectangle targetGameWindowRec = {
-        gameScreenOffset.x,
-        gameScreenOffset.y,
-        static_cast<float>(screenWidth) * gameScreenRenderScale,
-        static_cast<float>(screenHeight) * gameScreenRenderScale
+        screenOffset.x, 
+        screenOffset.y, 
+        static_cast<float>(screenWidthScaled), 
+        static_cast<float>(screenHeighScaled)
+    };
+    Rectangle sourceGameWindowRec = { 
+        0.0f, 
+        0.0f, 
+        static_cast<float>(screenWidth), 
+        -static_cast<float>(screenHeight)
     };
 
     // Render game screen to window
-    Rectangle sourceGameWindowRec = { 0.0f, 0.0f, static_cast<float>(screenWidth), -static_cast<float>(screenHeight)};
     BeginDrawing();
             ClearBackground(BLACK);
             DrawTexturePro(screen.texture, sourceGameWindowRec, targetGameWindowRec, {0, 0}, 0, WHITE);
     EndDrawing();
+}
+
+// Map window position to screen position
+Vector2 Game::MapWindowToScreenPosition(const Vector2& original){
+    // Map position
+    Vector2 mapped ={
+        mapped.x = static_cast<int>((original.x - screenOffset.x) / screenRenderScale),
+        mapped.y = static_cast<int>((original.y - screenOffset.y) / screenRenderScale)
+    };
+
+    // Clamp position to the screen size
+    mapped = Vector2Clamp(
+        mapped, 
+        {0, 0}, 
+        {static_cast<float>(screenWidth), static_cast<float>(screenHeight)}
+    );
+    return mapped;
 }

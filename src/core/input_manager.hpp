@@ -11,16 +11,18 @@ enum class Action {
 };
 
 struct InputManager{
-    Vector2 gameMousePosition;
+    Vector2 mouse;
+
     std::map<Action, KeyboardKey> bindings;
 
     InputManager();
     ~InputManager();
 
-    void CalculateGameMousePosition();
     void Bind(Action action, KeyboardKey key);
 
-    Vector2 GetGameMousePosition();
+    void SetMouse(const Vector2& position);
+    Vector2& GetMouse();
+
     bool IsActionContinuos(Action action);
     bool IsActionTriggered(Action action);
 

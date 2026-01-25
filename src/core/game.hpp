@@ -8,19 +8,27 @@ struct Game {
     // Logic
     bool running = true;
 
-    // Game Window
+    // Window
+    const char* titel = "OpenChaosDefender";
+    const int windowWidth = 1080;
+    const int windowHeight = 720;
+    const int minWindowWidth = 320;
+    const int minWindowHeight = 320;
+
+    // Game screen
+    RenderTexture screen;
     const int screenWidth = 384;
     const int screenHeight = 384;
-    RenderTexture screen;
-
-    float gameScreenRenderScale;
-    Vector2 gameScreenOffset;
+    int screenWidthScaled;
+    int screenHeighScaled;
+    float screenRenderScale;
+    Vector2 screenOffset;
+    
 
     // Managers
     InputManager inputManager;
     AssetManager assetManager;
     SceneManager sceneManager;
-
 
     Game();
     ~Game();
@@ -29,5 +37,10 @@ struct Game {
     void Run();
     void Shutdown();
 
-    void DrawGameScreen();
+    void InitializeWindow();
+
+    void UpdateScreen();
+    void DrawScreen();
+
+    Vector2 MapWindowToScreenPosition(const Vector2& original);
 };

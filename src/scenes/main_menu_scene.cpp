@@ -8,25 +8,26 @@ MainMenuScene::MainMenuScene(InputManager& input, AssetManager& assets)
 MainMenuScene::~MainMenuScene(){}
 
 void MainMenuScene::Enter(){
+    // Reset variables between scene changes
     startPlay = false;
 
-    //g_InputManager.Bind(Action::Jump, KEY_A);
+    r_inputManager.Bind(Action::Jump, KEY_A);
 }
 
 void MainMenuScene::Update(float& dt){
-    /*if(g_InputManager.IsActionTriggered(Action::Jump)){
+    if(r_inputManager.IsActionTriggered(Action::Jump)){
         startPlay = true;
-    }*/
+    }
 }
 
 void MainMenuScene::Draw(RenderTexture2D& screen){
     BeginTextureMode(screen);
         ClearBackground(BLUE);
         DrawText("This is the MainMenuScene", 0, 100, 20, LIGHTGRAY);
-        //DrawCircleV(g_InputManager.GetGameMousePosition(), 10, RED);
+        DrawCircleV(r_inputManager.GetMouse(), 5, WHITE);
     EndTextureMode();
 }
 
 void MainMenuScene::Exit(){
-    //g_InputManager.Cleanup();
+    r_inputManager.Cleanup();
 }
