@@ -15,10 +15,21 @@ bool Game::Initialize(){
 
     // Initialize screen texture
     screen = LoadRenderTexture(screenWidth, screenHeight);
+    SetTextureWrap(screen.texture, TEXTURE_WRAP_CLAMP);
 
     // Scene setup
     sceneManager.Initialize(inputManager, assetManager);
     sceneManager.SetScene(SceneType::MAINMENU);
+    
+    assetManager.SearchAssetPath("assets", 3);
+    assetManager.SetTexturesDirectory("textures");
+    assetManager.SetFontDirectory("fonts");
+
+    // Texture
+    assetManager.LoadTexture("test.png", "test");
+
+    // Font
+    assetManager.LoadFont("RobotoCondensed-Regular.ttf", "roboto", 32);
 
     return initialized;
 }
@@ -47,6 +58,7 @@ void Game::Run(){
 void Game::Shutdown(){
     inputManager.Cleanup();
     sceneManager.Cleanup();
+    assetManager.Cleanup();
 
     CloseAudioDevice();
     CloseWindow(); // Close window and OpenGL context
@@ -74,8 +86,8 @@ void Game::InitializeWindow(){
 void Game::UpdateScreen(){
     // Calculate offset and scale to draw the screen to the window
     screenRenderScale = std::fminf(static_cast<float>(GetScreenWidth()) / screenWidth, static_cast<float>(GetScreenHeight()) / screenHeight);
-    screenWidthScaled = static_cast<float>(screenWidth) * screenRenderScale;
-    screenHeighScaled = static_cast<float>(screenHeight) * screenRenderScale;
+    screenWidthScaled = std::round(static_cast<float>(screenWidth) * screenRenderScale);
+    screenHeighScaled = std::round(static_cast<float>(screenHeight) * screenRenderScale);
 
     screenOffset = {
         (GetScreenWidth() - screenWidthScaled) * 0.5f,
@@ -98,7 +110,6 @@ void Game::DrawScreen(){
         static_cast<float>(screenWidth), 
         -static_cast<float>(screenHeight)
     };
-
     // Render game screen to window
     BeginDrawing();
             ClearBackground(BLACK);
@@ -110,8 +121,8 @@ void Game::DrawScreen(){
 Vector2 Game::MapWindowToScreenPosition(const Vector2& original){
     // Map position
     Vector2 mapped ={
-        mapped.x = static_cast<int>((original.x - screenOffset.x) / screenRenderScale),
-        mapped.y = static_cast<int>((original.y - screenOffset.y) / screenRenderScale)
+        mapped.x = static_cast<int>(std::round((original.x - screenOffset.x) / screenRenderScale)),
+        mapped.y = static_cast<int>(std::round((original.y - screenOffset.y) / screenRenderScale))
     };
 
     // Clamp position to the screen size

@@ -22,9 +22,9 @@ void MainMenuScene::Update(float& dt){
 
 void MainMenuScene::Draw(RenderTexture2D& screen){
     BeginTextureMode(screen);
-        ClearBackground(BLUE);
-        DrawText("This is the MainMenuScene", 0, 100, 20, LIGHTGRAY);
-        DrawCircleV(r_inputManager.GetMouse(), 5, WHITE);
+        ClearBackground(DARKGRAY);
+        DrawText("This is the MainMenuScene", 0, 100, 36, BLACK);
+        DrawCircleV(r_inputManager.GetMouse(), 2, WHITE);
     EndTextureMode();
 }
 

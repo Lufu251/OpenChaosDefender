@@ -3,8 +3,10 @@
 #include <raylib.h>
 #include <core/scene_manager.hpp>
 #include <core/input_manager.hpp>
+#include <core/asset_manager.hpp>
 
 struct Game {
+    int i = 2;
     // Logic
     bool running = true;
 
@@ -17,8 +19,8 @@ struct Game {
 
     // Game screen
     RenderTexture screen;
-    const int screenWidth = 384;
-    const int screenHeight = 384;
+    const int screenWidth = 1200;
+    const int screenHeight = 768;
     int screenWidthScaled;
     int screenHeighScaled;
     float screenRenderScale;

@@ -3,8 +3,9 @@ This is a work in progress TowerDefense game that will focus on freedom of tower
 
 * [Features](#features)
 * [Notes](#notes)
-* [Building](#building)
 * [Media](#media)
+* [Credit](#credit)
+* [Building](#building)
 * [License](#license)
 
 ## Features
@@ -13,6 +14,12 @@ This is a work in progress TowerDefense game that will focus on freedom of tower
 ## Notes
 * (Add a controls here)
 * (Add a additional information here)
+
+## Media
+* (Add a screenshot or GIF of your project here)
+
+## Credit
+* [Font: Monogram by datagoblin](https://datagoblin.itch.io/monogram)
 
 ## Building
 
@@ -40,9 +47,6 @@ This is a work in progress TowerDefense game that will focus on freedom of tower
     ./build_web.sh
     ```
     Now there should be a HTTP Server running under port 8000 to test your project. The URL should be visible in the active terminal.
-
-## Media
-* (Add a screenshot or GIF of your project here)
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

@@ -1,9 +1,14 @@
 #pragma once
 
 #include <scenes/scene.hpp>
+#include <game/game_state.hpp>
 
 struct PlayScene : Scene{
     bool toMainMenu = false;
+
+    GameState state;
+
+    int tileSize = 64;
 
     PlayScene(InputManager& input, AssetManager& assets);
     ~PlayScene();

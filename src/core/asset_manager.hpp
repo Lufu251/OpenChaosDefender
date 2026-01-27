@@ -1,44 +1,34 @@
 #pragma once
 
 #include <raylib.h>
-#include <map>
+#include <unordered_map>
 #include <string>
 
 struct AssetManager{
-    std::map<std::string, Font> fonts;
-    std::map<std::string, Texture2D> textures;
-    std::map<std::string, Sound> sounds;
-    std::map<std::string, Music> music;
+    std::unordered_map<std::string, Texture2D> textures;
+    std::unordered_map<std::string, Font> fonts;
 
     AssetManager();
     ~AssetManager();
 
     // Asset path and directory names
-    std::string assetPath = "not set";
-    std::string texturesDirectory = "textures";
-    std::string soundsDirectory = "sounds";
-    std::string fontsDirectory = "fonts";
-    std::string musicDirectory = "music";
+    std::string assetPath = "Null";
+    std::string texturesDirectory = "Null";
+    std::string fontDirectory = "Null";
 
     // Set directories and asset path
     void SearchAssetPath(std::string folderName, size_t searchDepth);
-    void SetFontDirectory(const std::string& folderName);
-    void SetTexturesDirectory(const std::string& folderName);
-    void SetSoundDirectory(const std::string& folderName);
-    void SetMusicDirectory(const std::string& folderName);
 
-    // Load
-    void LoadFont();
-    void LoadTexture();
-    void LoadSound();
-    void LoadMusic();
+    // Texture
+    void SetTexturesDirectory(const std::string& name);
+    void LoadTexture(const std::string& fileName, const std::string& assetName);
+    Texture2D& GetTexture(const std::string& name);
 
-    // Get asset
-    Font& GetFont();
-    Texture2D& GetTexture();
-    Sound& GetSound();
-    Music& GetMusic();
+    // Font
+    void SetFontDirectory(const std::string& name);
+    void LoadFont(const std::string& fileName, const std::string& assetName, const int size);
+    Font& GetFont(const std::string& name);
 
     // Unload
-    void ClearAllCaches();
+    void Cleanup();
 };

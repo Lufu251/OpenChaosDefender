@@ -18,11 +18,11 @@ struct InputManager{
     InputManager();
     ~InputManager();
 
-    void Bind(Action action, KeyboardKey key);
-
     void SetMouse(const Vector2& position);
     Vector2& GetMouse();
 
+
+    void Bind(Action action, KeyboardKey key);
     bool IsActionContinuos(Action action);
     bool IsActionTriggered(Action action);
 
