@@ -29,11 +29,11 @@ void PlayScene::Update(float& dt){
 }
 void PlayScene::Draw(RenderTexture2D& screen){
     BeginTextureMode(screen);
-        ClearBackground(DARKGRAY);
+        ClearBackground(LIGHTGRAY);
 
         for(int x=0; x < state.map.GetSizeX(); x++){
             for(int y=0; y < state.map.GetSizeY(); y++){
-                DrawTextureEx(r_assetManager.GetTexture("test"), {static_cast<float>(x*tileSize), static_cast<float>(y*tileSize)}, 0, 2, WHITE);
+                DrawTextureEx(r_assetManager.GetTexture("land"), {static_cast<float>(x*tileSize), static_cast<float>(y*tileSize)}, 0, 2, WHITE);
             }
         }
         Font& boldpixels = r_assetManager.GetFont("boldpixels");

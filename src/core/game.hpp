@@ -6,7 +6,6 @@
 #include <core/asset_manager.hpp>
 
 struct Game {
-    int i = 2;
     // Logic
     bool running = true;
 

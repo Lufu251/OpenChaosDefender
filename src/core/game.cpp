@@ -21,13 +21,12 @@ bool Game::Initialize(){
     sceneManager.Initialize(inputManager, assetManager);
     sceneManager.SetScene(SceneType::MAINMENU);
     
+    // Assetmanager
     assetManager.SearchAssetPath("assets", 3);
     assetManager.SetTexturesDirectory("textures");
     assetManager.SetFontDirectory("fonts");
-
     // Texture
-    assetManager.LoadTexture("test.png", "test");
-
+    assetManager.LoadTexture("land.png", "land");
     // Font
     assetManager.LoadFont("RobotoCondensed-Regular.ttf", "roboto", 32);
 
@@ -112,7 +111,7 @@ void Game::DrawScreen(){
     };
     // Render game screen to window
     BeginDrawing();
-            ClearBackground(BLACK);
+            ClearBackground(DARKGRAY);
             DrawTexturePro(screen.texture, sourceGameWindowRec, targetGameWindowRec, {0, 0}, 0, WHITE);
     EndDrawing();
 }
